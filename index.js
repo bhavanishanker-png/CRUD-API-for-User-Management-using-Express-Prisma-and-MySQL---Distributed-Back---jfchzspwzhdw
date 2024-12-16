@@ -44,11 +44,6 @@ app.post('/api/auth/signup', async (req, res) => {
 
 // Login Endpoint
 app.post('/api/auth/login', async (req, res) => {
-  const { error } = loginSchema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
-  }
-
   const { email, password } = req.body;
 
   try {
