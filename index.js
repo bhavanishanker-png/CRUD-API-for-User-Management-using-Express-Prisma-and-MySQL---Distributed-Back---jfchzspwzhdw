@@ -22,14 +22,14 @@ app.post("/api/auth/signup", async(req, res)=>{
       "error": "Password is required"
     })
   }
-  const exist = await prisma.users.findUnique({where: {email:email}})
+  const exist = await prisma.user.findUnique({where: {email:email}})
   if(exist){
     return res.status(400).json({
       "error": "Email already in use"
     })
   }
   const hashed = await bcrypt.hash(password, 10)
-  const create= await prisma.users.create({data:{
+  const create= await prisma.user.create({data:{
     name, email, password:hashed
   }})
   return res.status(201).json({
@@ -45,7 +45,7 @@ app.post("/api/auth/login", async(req, res)=>{
       "error": "Email and password are required"
     })
   }
-  const exist = await prisma.users.findUnique({where: {email:email}})
+  const exist = await prisma.user.findUnique({where: {email:email}})
   if(!exist){
     return res.status(404).json({
       "error": "User not found"
